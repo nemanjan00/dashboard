@@ -264,7 +264,7 @@ const getSettingSection = (name, value) => {
 };
 
 const getSettings = () => {
-	return fetch("./mysettings").then(response => {
+	return fetch("./mysettings.html").then(response => {
 		return response.text();
 	}).then(body => {
 		const cleanBody = body
