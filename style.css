@@ -127,12 +127,13 @@ body {
 	font-weight: bold;
 }
 
-input[type="text"],
+input,
 select {
 	width: calc(100% - 20px);
 	padding: 8px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
+	background-color: #fff;
 }
 
 button {

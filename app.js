@@ -14,9 +14,10 @@ const inputTypes = {
 
 		inputElement.type = "number";
 		inputElement.placeholder = "Enter number";
+		inputElement.value = settings.value;
 
 		inputElement.addEventListener("change", event => {
-			settings.value = event.textContent;
+			settings.value = inputElement.value;
 		});
 
 		parent.appendChild(inputElement);
@@ -27,10 +28,29 @@ const inputTypes = {
 
 		inputElement.type = "text";
 		inputElement.placeholder = "Enter text";
-		inputElement.value = settings.value + "";
+		inputElement.value = settings.value;
 
 		inputElement.addEventListener("change", event => {
-			console.log(event);
+			settings.value = inputElement.value;
+		});
+
+		parent.appendChild(inputElement);
+	},
+
+	multichoice: (options) => (parent, settings, field) => {
+		const inputElement = document.createElement("select");
+
+		Object.keys(options).forEach(option => {
+			const optionElement = document.createElement("option");
+			optionElement.value = option;
+			optionElement.innerText = options[option];
+
+			inputElement.appendChild(optionElement);
+		});
+
+		inputElement.value = settings.value;
+
+		inputElement.addEventListener("change", event => {
 			settings.value = inputElement.value;
 		});
 
@@ -41,27 +61,38 @@ const inputTypes = {
 const fields = {
 	"NICK": {
 		name: "Nick",
-		description: "Name, nickname, etc."
+		description: "Name, nickname, etc.",
+		input: inputTypes.text
 	},
 	"CS": {
 		name: "Callsign",
-		description: "Your hamradio callsign"
+		description: "Your hamradio callsign",
+		input: inputTypes.text
 	},
 	"ID": {
 		name: "DMR ID",
-		description: "Your DMR ID"
+		description: "Your DMR ID",
+		input: inputTypes.number
 	},
 	"DMRPASS": {
 		name: "BrandMeister DMR password",
-		description: "Password for your repeater"
+		description: "Password for your repeater",
+		input: inputTypes.text
 	},
 	"DIS": {
 		name: "Screen timeout",
-		description: "Number of seconds before screen turns of (1 for never)"
+		description: "Number of seconds before screen turns of (1 for never)",
+		input: inputTypes.number
 	},
 	"SCREENS": {
 		name: "Screensaver",
-		description: "Screensaver style"
+		description: "Screensaver style",
+		input: inputTypes.multichoice({
+			"0": "Off",
+			"1": "1",
+			"2": "2",
+			"3": "3",
+		})
 	},
 	"CHMODE": {
 		name: "Tone channel switcher",
