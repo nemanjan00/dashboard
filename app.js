@@ -334,29 +334,31 @@ const getSettingSection = (name, value) => {
 const getSettings = () => {
 	return fetch("./mysettings.html").then(response => {
 		return response.text();
-	}).then(body => {
-		const cleanBody = body
-			.trim()
-			.split("\r")
-			.join("")
-			.split("\n")
-			.map(el => el.trim())
-			.filter(el => el != "")
-			.map(el => {
-				const segments = el.split("=");
+	}).then(parseSettings);
+};
 
-				const name = segments.shift();
-				const value = segments.join("=");
+const parseSettings = body => {
+	const cleanBody = body
+		.trim()
+		.split("\r")
+		.join("")
+		.split("\n")
+		.map(el => el.trim())
+		.filter(el => el != "")
+		.map(el => {
+			const segments = el.split("=");
 
-				return {name, value};
-			});
+			const name = segments.shift();
+			const value = segments.join("=");
 
-		const settings = {};
+			return {name, value};
+		});
 
-		cleanBody.forEach(el => settings[el.name] = el.value);
+	const settings = {};
 
-		return settings;
-	});
+	cleanBody.forEach(el => settings[el.name] = el.value);
+
+	return settings;
 };
 
 const createSettingsItem = (name, value) => {
@@ -400,8 +402,10 @@ const createSettingsSection = (name) => {
 	};
 };
 
-getSettings().then(settings => {
+const generateForm = settings => {
 	const settingsContainer = document.querySelectorAll("#settings-sections")[0];
+
+	settingsContainer.innerHTML = "";
 
 	const sections = {};
 
@@ -440,10 +444,47 @@ getSettings().then(settings => {
 		keys.push(element);
 	});
 
+	return {
+		render: () => keys.map(el => `${el.settings.name}=${el.settings.value}`).join("\n")
+	};
+};
+
+const generateTextual = settings => {
+	const settingsContainer = document.querySelectorAll("#settings-sections")[0];
+
+	settingsContainer.innerHTML = "";
+
+	const textareaElement = document.createElement("textarea");
+
+	textareaElement.value = settings;
+
+	settingsContainer.append(textareaElement);
+
+	return {
+		render: () => textareaElement.value
+	};
+};
+
+getSettings().then(settings => {
+	let source = generateForm(settings);
+
+	const textualCheckbox = document.getElementById("textual");
+
+	textualCheckbox.addEventListener("change", event => {
+		const newSettings = source.render();
+		const newSettingsParsed = parseSettings(newSettings);
+
+		if(textualCheckbox.checked) {
+			source = generateTextual(newSettings);
+		} else {
+			source = generateForm(newSettingsParsed);
+		}
+	});
+
 	document.getElementById("submit").addEventListener("click", () => {
 		const modal = document.getElementById('modal');
 
-		console.log(keys.map(el => `${el.settings.name}=${el.settings.value}`).join("\n"));
+		console.log(source.render());
 
 		modal.style.display = 'flex';
 	});
