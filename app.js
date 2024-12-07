@@ -1,3 +1,136 @@
+const fields = {
+	"NICK": {
+		name: "Nick",
+		description: "Name, nickname, etc."
+	},
+	"CS": {
+		name: "Callsign",
+		description: "Your hamradio callsign"
+	},
+	"ID": {
+		name: "DMR ID",
+		description: "Your DMR ID"
+	},
+	"DMRPASS": {
+		name: "BrandMeister DMR password",
+		description: "Password for your repeater"
+	},
+	"DIS": {
+		name: "Screen timeout",
+		description: "Number of seconds before screen turns of (1 for never)"
+	},
+	"SCREENS": {
+		name: "Screensaver",
+		description: "Screensaver style"
+	},
+	"CHMODE": {
+		name: "Tone channel switcher",
+		description: "Should Tone be used to switch channel?"
+	},
+	"HISTORY": {
+		name: "Last call duration",
+		description: "How long should last conversation be displayed for"
+	},
+	"FREEZESCANTX": {
+		name: "Pause scan after TX",
+		description: "How long should scan be paused after TX"
+	},
+	"FREEZESCANRX": {
+		name: "Pause scan after RX",
+		description: "How long should scan be paused after RX"
+	},
+	"TSQBEEP": {
+		name: "DTMF on channel change",
+		description: "Play DTMF after channel change using PL"
+	},
+	"SCANBEEP": {
+		name: "DTMF on channel change in scan",
+		description: "Play DTMF after channel change using scan"
+	},
+	"SLEEP": {
+		name: "Power saving time",
+		description: "After how much time should it enter power save mode"
+	},
+	"IFT": {
+		name: "TX frequency",
+	},
+	"IFR": {
+		name: "RX frequency",
+	},
+	"DYTR": {
+		name: "Digital RX/TX frequency",
+		description: "RX/TX frequency for digital channels"
+	},
+	"SQL(dBm)": {
+		name: "Squelch level in dBm"
+	},
+	"SQH(dBm)": {
+		name: "Squelch upper level in dBm"
+	},
+	"BANDWIDTH": {
+		name: "Channel bandwith",
+		description: "Frequency deviation, 12.5kHz or 25kHz"
+	},
+	"PTF": {
+		name: "Tone",
+		description: "Tone frequency in Hz"
+	},
+	"TSQF": {
+		name: "RX Tone squelch"
+	},
+	"TOTWD": {
+		name: "Maximum TX time"
+	},
+	"ATXLevel": {
+		name: "TX level for analog"
+	},
+	"DTXLevel": {
+		name: "TX level for digital"
+	},
+	"DMRIP": {
+		name: "Brandmaister server IP"
+	},
+	"DMRP": {
+		name: "Brandmaister server Port"
+	},
+	"CONNECT": {
+		name: "Multiple IMN servers"
+	},
+	"IMNIP": {
+		name: "IMN server IP"
+	},
+	"IMNP": {
+		name: "IMN server Port"
+	},
+	"IMNIPSEC": {
+		name: "Secondary IMN server IP"
+	},
+	"IMNPSEC": {
+		name: "Secondary IMN server Port"
+	},
+	"TAENABLE": {
+		name: "Talker alias"
+	},
+	"DMRlatitude": {
+		name: "DMR hotspot latitude"
+	},
+	"DMRlongitude": {
+		name: "DMR hotspot latitude"
+	},
+	"DMRheight": {
+		name: "DMR hotspot altitude"
+	},
+	"DMRlocation": {
+		name: "DMR hotspot location"
+	},
+	"DMRdescription": {
+		name: "DMR hotspot name"
+	},
+	"DMRurl": {
+		name: "DMR hotspot url"
+	}
+};
+
 const sectionFilters = [
 	{
 		name: "WiFi",
@@ -149,6 +282,8 @@ const getSettings = () => {
 };
 
 const createSettingsItem = (name, value) => {
+	const field = fields[name] || {};
+
 	const settings = {
 		name,
 		value
@@ -158,7 +293,7 @@ const createSettingsItem = (name, value) => {
 	itemElement.classList.add("setting-item");
 
 	const itemLabel = document.createElement("label");
-	itemLabel.innerText = name;
+	itemLabel.innerText = field.name || name;
 	itemElement.appendChild(itemLabel);
 
 	const inputElement = document.createElement("input");
@@ -167,9 +302,17 @@ const createSettingsItem = (name, value) => {
 	inputElement.value = value;
 	itemElement.appendChild(inputElement);
 
+	if(field.description) {
+		const descriptionElement = document.createElement("div");
+		descriptionElement.innerText = field.description;
+
+		itemElement.appendChild(descriptionElement);
+	}
+
 	return {
 		settings,
-		element: itemElement
+		element: itemElement,
+		field
 	};
 };
 
