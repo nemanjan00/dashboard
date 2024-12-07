@@ -454,12 +454,25 @@ const generateTextual = settings => {
 
 	settingsContainer.innerHTML = "";
 
+	const section = createSettingsSection("Textual");
+
+	settingsContainer.appendChild(section.element);
+
 	const textareaElement = document.createElement("textarea");
 
 	textareaElement.classList.add("textarea-input");
 	textareaElement.value = settings;
 
-	settingsContainer.append(textareaElement);
+	const itemElement = document.createElement("div");
+	itemElement.classList.add("setting-item");
+
+	const itemLabel = document.createElement("label");
+	itemLabel.innerText = "Textual";
+	itemElement.appendChild(itemLabel);
+
+	itemElement.appendChild(textareaElement);
+
+	section.element.append(itemElement);
 
 	return {
 		render: () => textareaElement.value
@@ -470,6 +483,8 @@ getSettings().then(settings => {
 	let source = generateForm(settings);
 
 	const textualCheckbox = document.getElementById("textual");
+
+	textualCheckbox.checked = false;
 
 	textualCheckbox.addEventListener("change", event => {
 		const newSettings = source.render();

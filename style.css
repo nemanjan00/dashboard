@@ -227,7 +227,7 @@ button.submit {
 }
 
 textarea {
-	width: 100%; /* Make it responsive */
+	width: calc(100% - 20px); /* Make it responsive */
 	max-width: 100%; /* Prevent overflow */
 	min-height: 150px; /* Set a comfortable height */
 	padding: 10px;
