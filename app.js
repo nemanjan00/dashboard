@@ -479,30 +479,133 @@ const generateTextual = settings => {
 	};
 };
 
-getSettings().then(settings => {
-	let source = generateForm(settings);
+const settingsPage = (type) => {
+	return (view) => {
+		const titleElement = document.createElement("h2");
 
-	const textualCheckbox = document.getElementById("textual");
+		const map = {
+			home_settings: "Home settings",
+			portable_settings: "Portable settings"
+		};
 
-	textualCheckbox.checked = false;
+		titleElement.innerText = map[type];
 
-	textualCheckbox.addEventListener("change", event => {
-		const newSettings = source.render();
-		const newSettingsParsed = parseSettings(newSettings);
+		view.appendChild(titleElement);
 
-		if(textualCheckbox.checked) {
-			source = generateTextual(newSettings);
-		} else {
-			source = generateForm(newSettingsParsed);
+		const renderTextSwitch = view => {
+			const modeElement = document.createElement("span");
+			modeElement.classList.add("mode");
+
+			const modeSpanElement = document.createElement("span");
+			modeSpanElement.innerText = "Textual mode";
+
+			modeElement.appendChild(modeSpanElement);
+
+			const modeLabelElement = document.createElement("label");
+			modeLabelElement.classList.add("switch");
+
+			const modeInputElement = document.createElement("input");
+			modeInputElement.id = "textual";
+			modeInputElement.type = "checkbox";
+
+			const modeInputSpanElement = document.createElement("span");
+			modeInputSpanElement.classList.add("slider");
+			modeInputSpanElement.classList.add("round");
+
+
+			modeLabelElement.appendChild(modeInputElement);
+			modeLabelElement.appendChild(modeInputSpanElement);
+
+			modeElement.append(modeLabelElement);
+
+			view.appendChild(modeElement);
+		};
+
+		renderTextSwitch(view);
+
+		const settingsContainerElement = document.createElement("div");
+		settingsContainerElement.classList.add("settings-container");
+
+		const settingsSectionsElement = document.createElement("div");
+		settingsSectionsElement.id = "settings-sections";
+
+		settingsContainerElement.appendChild(settingsSectionsElement);
+		view.appendChild(settingsContainerElement);
+
+		const submitButton = document.createElement("button");
+		submitButton.classList.add("submit");
+		submitButton.id = "submit";
+
+		submitButton.innerText = "Submit";
+
+		view.appendChild(submitButton);
+
+		getSettings(type).then(settings => {
+			let source = generateForm(settings);
+
+			const textualCheckbox = document.getElementById("textual");
+
+			textualCheckbox.checked = false;
+
+			textualCheckbox.addEventListener("change", () => {
+				const newSettings = source.render();
+				const newSettingsParsed = parseSettings(newSettings);
+
+				if(textualCheckbox.checked) {
+					source = generateTextual(newSettings);
+				} else {
+					source = generateForm(newSettingsParsed);
+				}
+			});
+
+			document.getElementById("submit").addEventListener("click", () => {
+				const modal = document.getElementById('modal');
+
+				console.log(source.render());
+
+				modal.style.display = 'flex';
+			});
+		});
+	}
+};
+
+const routes = {
+	home_settings: settingsPage("home_settings"),
+	portable_settings: settingsPage("portable_settings"),
+	channels_settings: () => {},
+	update: () => {}
+};
+
+const goToRoute = (route) => {
+	const view = document.getElementById("view");
+
+	const menuElements = document.querySelectorAll(".menu a");
+
+	menuElements.forEach(element => {
+		if(element.getAttribute("view") === route) {
+			element.classList.add("active");
+			return;
 		}
+
+		element.classList.remove("active");
 	});
 
-	document.getElementById("submit").addEventListener("click", () => {
-		const modal = document.getElementById('modal');
+	view.innerHTML = "";
 
-		console.log(source.render());
+	routes[route](view);
+};
 
-		modal.style.display = 'flex';
+const setupRouter = () => {
+	const menuElements = document.querySelectorAll(".menu a");
+
+	menuElements.forEach(element => {
+		const route = element.getAttribute("view");
+
+		element.addEventListener("click", () => {
+			goToRoute(route);
+		});
 	});
-});
+};
 
+setupRouter();
+goToRoute("home_settings");

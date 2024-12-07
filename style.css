@@ -55,6 +55,10 @@ body {
 	transition: color 0.3s;
 }
 
+.menu a.active {
+	color: #0056b3;
+}
+
 .menu a:hover {
 	color: #007bff;
 }

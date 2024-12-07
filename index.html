@@ -22,41 +22,14 @@
 				<img src="./logo.svg" />
 			</div>
 			<nav class="menu">
-				<a href="#">Home settings</a>
-				<a href="#">Portable settings</a>
-				<a href="#">Channel settings</a>
-				<a href="#">Manual update</a>
+				<a href="#" view="home_settings">Home settings</a>
+				<a href="#" view="portable_settings">Portable settings</a>
+				<a href="#" view="channels_settings">Channel settings</a>
+				<a href="#" view="update">Manual update</a>
 			</nav>
 		</aside>
 
-		<main class="content" id="home-settings">
-			<h2>Home settings</h2>
-
-			<span class="mode">
-				Textual mode
-				<label class="switch">
-					<input id="textual" type="checkbox">
-					<span class="slider round"></span>
-				</label>
-			</span>
-
-			<div class="settings-container">
-				<div id="settings-sections"></div>
-
-				<!--<div id="settings-sections">-->
-					<!--<div class="settings-section">-->
-						<!--<div class="setting-item">-->
-							<!--<label for="text-input-1">text input:</label>-->
-							<!--<input type="text" id="text-input-1" placeholder="enter text">-->
-						<!--</div>-->
-
-						<!--<button class="add-section">+</button>-->
-					<!--</div>-->
-				<!--</div>-->
-			</div>
-
-			<button class="submit" id="submit">Submit</button>
-		</main>
+		<main class="content" id="view"></main>
 
 		<!-- Modal Structure -->
 		<div class="modal" id="modal">
