@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>IMN Hotspot</title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="switch.css">
 </head>
 <body>
 	<div class="container">
@@ -23,6 +24,14 @@
 		<main class="content" id="home-settings">
 			<h2>Home settings</h2>
 
+			<span class="mode">
+				Textual mode
+				<label class="switch">
+					<input type="checkbox">
+					<span class="slider round"></span>
+				</label>
+			</span>
+
 			<div class="settings-container">
 				<div id="settings-sections"></div>
 
@@ -37,6 +46,8 @@
 					<!--</div>-->
 				<!--</div>-->
 			</div>
+
+			<button class="submit">Submit</button>
 		</main>
 
 		<script src="./app.js"></script>

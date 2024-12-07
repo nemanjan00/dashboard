@@ -72,13 +72,13 @@ body {
 
 input[type="text"],
 select {
-	width: 100%;
+	width: calc(100% - 20px);
 	padding: 8px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
 
-button.add-section {
+button {
 	background-color: #007bff;
 	color: #fff;
 	border: none;
@@ -87,12 +87,21 @@ button.add-section {
 	cursor: pointer;
 }
 
-button.add-section:hover {
+button:hover {
 	background-color: #0056b3;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 1000px) {
 	.setting-item {
 		flex: 1 1 calc(50% - 20px); /* Two items per row */
 	}
+}
+
+button.submit {
+	float: right;
+}
+
+.mode {
+	float: right;
+	margin-top: -50px;
 }
