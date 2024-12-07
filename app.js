@@ -456,6 +456,7 @@ const generateTextual = settings => {
 
 	const textareaElement = document.createElement("textarea");
 
+	textareaElement.classList.add("textarea-input");
 	textareaElement.value = settings;
 
 	settingsContainer.append(textareaElement);

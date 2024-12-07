@@ -260,3 +260,7 @@ textarea::placeholder {
   color: #aaa;
   font-style: italic;
 }
+
+.textarea-input {
+	height: 70vh;
+}
