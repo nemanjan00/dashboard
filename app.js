@@ -96,19 +96,26 @@ const fields = {
 	},
 	"CHMODE": {
 		name: "Tone channel switcher",
-		description: "Should Tone be used to switch channel?"
+		description: "Should Tone be used to switch channel?",
+		input: inputTypes.multichoice({
+			"1": "Off",
+			"2": "On"
+		})
 	},
 	"HISTORY": {
 		name: "Last call duration",
-		description: "How long should last conversation be displayed for"
+		description: "How long should last conversation be displayed for",
+		input: inputTypes.number
 	},
 	"FREEZESCANTX": {
 		name: "Pause scan after TX",
-		description: "How long should scan be paused after TX"
+		description: "How long should scan be paused after TX",
+		input: inputTypes.number
 	},
 	"FREEZESCANRX": {
 		name: "Pause scan after RX",
-		description: "How long should scan be paused after RX"
+		description: "How long should scan be paused after RX",
+		input: inputTypes.number
 	},
 	"TSQBEEP": {
 		name: "DTMF on channel change",
