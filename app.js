@@ -8,6 +8,36 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
+const inputTypes = {
+	number: (parent, settings, field) => {
+		const inputElement = document.createElement("input");
+
+		inputElement.type = "number";
+		inputElement.placeholder = "Enter number";
+
+		inputElement.addEventListener("change", event => {
+			settings.value = event.textContent;
+		});
+
+		parent.appendChild(inputElement);
+	},
+
+	text: (parent, settings, field) => {
+		const inputElement = document.createElement("input");
+
+		inputElement.type = "text";
+		inputElement.placeholder = "Enter text";
+		inputElement.value = settings.value + "";
+
+		inputElement.addEventListener("change", event => {
+			console.log(event);
+			settings.value = inputElement.value;
+		});
+
+		parent.appendChild(inputElement);
+	}
+};
+
 const fields = {
 	"NICK": {
 		name: "Nick",
@@ -306,11 +336,7 @@ const createSettingsItem = (name, value) => {
 	itemLabel.innerText = field.name || name;
 	itemElement.appendChild(itemLabel);
 
-	const inputElement = document.createElement("input");
-	inputElement.type = "text";
-	inputElement.placeholder = "Enter text";
-	inputElement.value = value;
-	itemElement.appendChild(inputElement);
+	(field.input || inputTypes.text)(itemElement, settings, field)
 
 	if(field.description) {
 		const descriptionElement = document.createElement("div");
@@ -353,6 +379,8 @@ getSettings().then(settings => {
 		return section;
 	};
 
+	const keys = [];
+
 	Object.keys(settings).forEach(setting => {
 		const name = setting;
 		const value = settings[name];
@@ -367,13 +395,19 @@ getSettings().then(settings => {
 			section = sections[sectionName] = addSection(sectionName);
 		}
 
-		const element = createSettingsItem(name, value).element;
-		section.element.appendChild(element);
+		const element = createSettingsItem(name, value);
+
+		section.element.appendChild(element.element);
+
+		keys.push(element);
+	});
+
+	document.getElementById("submit").addEventListener("click", () => {
+		const modal = document.getElementById('modal');
+
+		console.log(keys.map(el => `${el.settings.name}=${el.settings.value}`).join("\n"));
+
+		modal.style.display = 'flex';
 	});
 });
 
-document.getElementById("submit").addEventListener("click", () => {
-	const modal = document.getElementById('modal');
-
-	modal.style.display = 'flex';
-});
