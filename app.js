@@ -1,3 +1,13 @@
+document.addEventListener('DOMContentLoaded', () => {
+	const hamburgerBtn = document.getElementById('hamburger-btn');
+	const sidebar = document.getElementById('sidebar');
+
+	// Toggle sidebar visibility
+	hamburgerBtn.addEventListener('click', () => {
+		sidebar.classList.toggle('active');
+	});
+});
+
 const fields = {
 	"NICK": {
 		name: "Nick",
@@ -304,6 +314,7 @@ const createSettingsItem = (name, value) => {
 
 	if(field.description) {
 		const descriptionElement = document.createElement("div");
+		descriptionElement.classList.add("description");
 		descriptionElement.innerText = field.description;
 
 		itemElement.appendChild(descriptionElement);
