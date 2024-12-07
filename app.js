@@ -339,8 +339,6 @@ const createSettingsSection = (name) => {
 getSettings().then(settings => {
 	const settingsContainer = document.querySelectorAll("#settings-sections")[0];
 
-	console.log(settingsContainer);
-
 	const sections = {};
 
 	const addSection = (name) => {
@@ -372,4 +370,10 @@ getSettings().then(settings => {
 		const element = createSettingsItem(name, value).element;
 		section.element.appendChild(element);
 	});
+});
+
+document.getElementById("submit").addEventListener("click", () => {
+	const modal = document.getElementById('modal');
+
+	modal.style.display = 'flex';
 });
