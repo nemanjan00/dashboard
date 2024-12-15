@@ -358,7 +358,9 @@ const parseSettings = body => {
 };
 
 const getYSFHosts = () => {
-	return fetch("https://www.pistar.uk/downloads/YSF_Hosts.txt").then(response => {
+	const url = new URL("https://www.pistar.uk/downloads/YSF_Hosts.txt");
+
+	return fetch(url).then(response => {
 		return response.text();
 	});
 };
@@ -616,7 +618,7 @@ const settingsPage = (type) => {
 				}
 			});
 
-			document.getElementById("submit").addEventListener("click", () => {
+			submitButton.addEventListener("click", () => {
 				const modal = document.getElementById('modal');
 
 				console.log(source.render());
@@ -653,6 +655,16 @@ const channelsSettingsPage = (view) => {
 
 	getChannelsSettings().then(settings => {
 		generateTextual(serializeChannelsSettings(settings));
+	});
+
+	//getYSFHosts().then(console.log);
+
+	submitButton.addEventListener("click", () => {
+		const modal = document.getElementById('modal');
+
+		console.log(source.render());
+
+		modal.style.display = 'flex';
 	});
 };
 
