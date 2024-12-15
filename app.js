@@ -665,7 +665,7 @@ const channelsSettingsPage = (view) => {
 	submitButton.addEventListener("click", () => {
 		const modal = document.getElementById('modal');
 
-		console.log(source.render());
+		console.log(textual.render());
 
 		modal.style.display = 'flex';
 	});
