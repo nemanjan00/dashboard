@@ -671,11 +671,28 @@ const channelsSettingsPage = (view) => {
 	});
 };
 
+const updatePage = (view) => {
+	view.innerHTML = `
+	<div class="upload-container">
+		<h2>Update</h2>
+		<form id="upload-form" enctype="multipart/form-data">
+			<div class="form-group">
+				<label for="file-upload" class="file-label">Choose a binary file:</label>
+				<input type="file" id="file-upload" name="binaryBlob" class="file-input" accept="*/*" required>
+			</div>
+
+			<div class="form-group">
+				<button type="submit" class="submit">Upload</button>
+			</div>
+		</form>
+	</div>`;
+};
+
 const routes = {
 	home_settings: settingsPage("home_settings"),
 	portable_settings: settingsPage("portable_settings"),
 	channels_settings: channelsSettingsPage,
-	update: () => {}
+	update: updatePage
 };
 
 const goToRoute = (route) => {
@@ -710,4 +727,4 @@ const setupRouter = () => {
 };
 
 setupRouter();
-goToRoute("channels_settings");
+goToRoute("home_settings");

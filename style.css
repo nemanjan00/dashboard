@@ -272,3 +272,35 @@ textarea::placeholder {
 h2 {
 	margin-top: 0px;
 }
+
+/* update */
+.upload-container {
+	background-color: white;
+	padding-right: 20px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.file-label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #555;
+}
+
+.file-input {
+	width: 100%;
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #f9f9f9;
+}
+
+.file-input:focus {
+	outline: none;
+	border-color: #007bff;
+	box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
