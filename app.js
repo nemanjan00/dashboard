@@ -535,7 +535,8 @@ const generateTextual = settings => {
 	section.element.append(itemElement);
 
 	return {
-		render: () => textareaElement.value
+		render: () => textareaElement.value,
+		set: value => textareaElement.value = value
 	};
 };
 
@@ -653,8 +654,10 @@ const channelsSettingsPage = (view) => {
 
 	view.appendChild(submitButton);
 
+	const textual = generateTextual("");
+
 	getChannelsSettings().then(settings => {
-		generateTextual(serializeChannelsSettings(settings));
+		textual.set(serializeChannelsSettings(settings));
 	});
 
 	//getYSFHosts().then(console.log);
