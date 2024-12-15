@@ -333,12 +333,6 @@ const getSettingSection = (name, value) => {
 	return results[0].name;
 };
 
-const getSettings = () => {
-	return fetch("./mysettings.html").then(response => {
-		return response.text();
-	}).then(parseSettings);
-};
-
 const parseSettings = body => {
 	const cleanBody = body
 		.trim()
@@ -361,6 +355,55 @@ const parseSettings = body => {
 	cleanBody.forEach(el => settings[el.name] = el.value);
 
 	return settings;
+};
+
+const getYSFHosts = () => {
+	return fetch("https://www.pistar.uk/downloads/YSF_Hosts.txt").then(response => {
+		return response.text();
+	});
+};
+
+const getSettings = () => {
+	return fetch("./mysettings.html").then(response => {
+		return response.text();
+	}).then(parseSettings);
+};
+
+const serializeChannelsSettings = settings => {
+	return settings
+		.map(setting => {
+			return `${setting.value}=${setting.name},${setting.scan},${setting.type}`;
+		}).join("\n");
+};
+
+const parseChannelsSettings = body => {
+	const cleanBody = body
+		.trim()
+		.split("\r")
+		.join("")
+		.split("\n")
+		.map(el => el.trim())
+		.filter(el => el != "")
+		.map(el => {
+			const segments = el.split(",");
+
+			const name = segments[0].split("=")[1];
+			const value = segments[0].split("=")[0];
+
+			const scan = segments[1];
+
+			const type = segments[2];
+
+			return {name, value, scan, type};
+		});
+
+	return cleanBody;
+};
+
+const getChannelsSettings = () => {
+	return fetch("./channelsettings.html").then(response => {
+		return response.text();
+	}).then(parseChannelsSettings);
 };
 
 const createSettingsItem = (name, value) => {
@@ -431,6 +474,7 @@ const generateForm = settings => {
 		};
 
 		if(settings[field.name] === undefined && field.default) {
+			console.log("Filling in " + field.name);
 			settings[field.name] = field.default;
 		}
 	});
@@ -583,10 +627,39 @@ const settingsPage = (type) => {
 	}
 };
 
+const channelsSettingsPage = (view) => {
+	const titleElement = document.createElement("h2");
+
+	titleElement.innerText = "Channels settings";
+
+	view.appendChild(titleElement);
+
+	const settingsContainerElement = document.createElement("div");
+	settingsContainerElement.classList.add("settings-container");
+
+	const settingsSectionsElement = document.createElement("div");
+	settingsSectionsElement.id = "settings-sections";
+
+	settingsContainerElement.appendChild(settingsSectionsElement);
+	view.appendChild(settingsContainerElement);
+
+	const submitButton = document.createElement("button");
+	submitButton.classList.add("submit");
+	submitButton.id = "submit";
+
+	submitButton.innerText = "Submit";
+
+	view.appendChild(submitButton);
+
+	getChannelsSettings().then(settings => {
+		generateTextual(serializeChannelsSettings(settings));
+	});
+};
+
 const routes = {
 	home_settings: settingsPage("home_settings"),
 	portable_settings: settingsPage("portable_settings"),
-	channels_settings: () => {},
+	channels_settings: channelsSettingsPage,
 	update: () => {}
 };
 
@@ -622,4 +695,4 @@ const setupRouter = () => {
 };
 
 setupRouter();
-goToRoute("home_settings");
+goToRoute("channels_settings");
