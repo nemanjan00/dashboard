@@ -62,12 +62,14 @@ const fields = {
 	"NICK": {
 		name: "Nick",
 		description: "Name, nickname, etc.",
-		input: inputTypes.text
+		input: inputTypes.text,
+		default: "Ime i prezime"
 	},
 	"CS": {
 		name: "Callsign",
 		description: "Your hamradio callsign",
-		input: inputTypes.text
+		input: inputTypes.text,
+		default: "pozivni znak"
 	},
 	"ID": {
 		name: "DMR ID",
@@ -420,6 +422,18 @@ const generateForm = settings => {
 
 		return section;
 	};
+
+	Object.keys(fields).forEach(fieldName => {
+		const field = {
+			name: fieldName,
+			default: fields[fieldName].default,
+			field: fields[fieldName]
+		};
+
+		if(settings[field.name] === undefined && field.default) {
+			settings[field.name] = field.default;
+		}
+	});
 
 	const keys = [];
 
