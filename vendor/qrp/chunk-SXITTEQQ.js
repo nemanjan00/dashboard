@@ -1,1 +1,0 @@
-import{a as o,d as t}from"./chunk-ECSL4IP7.js";var r=(p=!1)=>{let e=o({open:p});return{state:e,toggle:()=>{e.open=!e.open},open:()=>{e.open=!0},close:()=>{e.open=!1},connect:(n,s)=>{t(()=>{n.setAttribute("aria-expanded",String(e.open)),s.hidden=!e.open}),n.addEventListener("click",()=>{e.open=!e.open})}}};export{r as a};

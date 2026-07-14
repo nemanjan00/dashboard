@@ -1,1 +1,0 @@
-import{a as c}from"./chunk-UVBQIMSF.js";var i=(o,r={})=>{let s=r.key||(n=>JSON.stringify(n)),e=r.store||(r.max!==void 0?c(r.max):new Map);return(...n)=>{let f=s(n);if(e.has(f))return e.get(f);let t=o(...n);return e.set(f,t),t&&typeof t.then=="function"&&t.catch(()=>{e.delete&&e.delete(f)}),t}};export{i as a};

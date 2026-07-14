@@ -1,1 +1,0 @@
-var r=n=>{let e=new Map;return{has:t=>e.has(t),get:t=>{if(!e.has(t))return;let s=e.get(t);return e.delete(t),e.set(t,s),s},set:(t,s)=>{e.has(t)&&e.delete(t),e.set(t,s),e.size>n&&e.delete(e.keys().next().value)},delete:t=>e.delete(t),get size(){return e.size}}};export{r as a};
