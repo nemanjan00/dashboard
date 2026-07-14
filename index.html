@@ -6,6 +6,15 @@
 	<title>IMN Hotspot</title>
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="switch.css">
+	<script type="importmap">
+	{
+		"imports": {
+			"@nemanjan00/qrp": "./vendor/qrp/qrp.js",
+			"@nemanjan00/qrp/forms": "./vendor/qrp/forms.js",
+			"@nemanjan00/qrp/html": "./vendor/qrp/html.js"
+		}
+	}
+	</script>
 </head>
 <body>
 	<header class="header">
@@ -21,12 +30,7 @@
 			<div class="logo">
 				<img src="./logo.svg" />
 			</div>
-			<nav class="menu">
-				<a href="#" view="home_settings">Home settings</a>
-				<a href="#" view="portable_settings">Portable settings</a>
-				<a href="#" view="channels_settings">Channel settings</a>
-				<a href="#" view="update">Manual update</a>
-			</nav>
+			<nav class="menu"></nav>
 		</aside>
 
 		<main class="content" id="view"></main>
@@ -39,7 +43,7 @@
 			</div>
 		</div>
 
-		<script src="./app.js"></script>
+		<script type="module" src="./app.js"></script>
 	</div>
 </body>
 </html>

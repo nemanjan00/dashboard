@@ -1,0 +1,12 @@
+{
+	"name": "imn-hotspot-dashboard",
+	"version": "1.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "node build.js"
+	},
+	"dependencies": {
+		"@nemanjan00/qrp": "^0.2.1"
+	}
+}
