@@ -1,0 +1,1 @@
+import{a as n}from"./chunk-ECSL4IP7.js";var i=()=>{let e=n({pending:0});return{state:e,run:t=>(e.pending+=1,Promise.resolve(t).finally(()=>{e.pending-=1})),get active(){return e.pending>0}}};export{i as a};

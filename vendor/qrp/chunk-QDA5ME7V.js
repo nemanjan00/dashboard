@@ -1,0 +1,1 @@
+var u=(s,t,n={})=>{let c=n.escape!==!1,d=n.outside!==!1,o=e=>{c&&e.key==="Escape"&&t(e)},r=e=>{d&&!s.contains(e.target)&&t(e)};document.addEventListener("keydown",o,!0);let i=setTimeout(()=>{document.addEventListener("pointerdown",r,!0)},0);return()=>{clearTimeout(i),document.removeEventListener("keydown",o,!0),document.removeEventListener("pointerdown",r,!0)}};export{u as a};

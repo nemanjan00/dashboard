@@ -1,0 +1,1 @@
+var a=e=>{let r=!1,t;return()=>(r||(t=e(),r=!0),t)},i=e=>{let r=Promise.resolve().then(()=>e());return()=>r},f=(e,r,t)=>{let l=r||2e3,s=e(),c=()=>{let n=e();return n.then(u=>(s=n,t&&t(n),u))},h=setInterval(()=>{c().catch(n=>{console.error(n)})},l),o=()=>s;return o.refresh=c,o.stop=()=>clearInterval(h),o};export{a,i as b,f as c};
